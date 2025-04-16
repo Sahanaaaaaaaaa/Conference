@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -14,33 +17,20 @@ public class Paper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(nullable = false)
     private String title;
-    
-    @Column(length = 2000)
-    private String description;
-    
-    @Enumerated(EnumType.STRING)
-    private PaperState state = PaperState.CREATED;
-    
+    private String abstract_;
+    private String keywords;
+    private String status;
+    private LocalDateTime submissionDate;
+
     @ManyToOne
-    @JoinColumn(name = "conference_id")
+    private User author;
+
+    @ManyToOne
     private Conference conference;
-    
-    @Lob
-    private byte[] data;
-    
-    private String fileName;
-    private String contentType;
-    private int version;
-    
-    @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL)
-    private Set<Review> reviews = new HashSet<>();
-    
-    @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL)
-    private Set<Author> authors = new HashSet<>();
-    
-    @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL)
-    private Set<Reviewer> reviewers = new HashSet<>();
-} 
+
+    @OneToMany(mappedBy = "paper")
+    private List<Review> reviews = new ArrayList<>();
+
+    // Getters and setters
+}

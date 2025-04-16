@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,17 +18,17 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(length = 2000)
-    private String comment;
-    
-    private Integer score;
-    
+    private int technicalScore;
+    private int noveltyScore;
+    private String comments;
+    private String confidentialComments;
+    private LocalDateTime reviewDate;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    
+    private User reviewer;
+
     @ManyToOne
-    @JoinColumn(name = "paper_id")
     private Paper paper;
-} 
+
+    // Getters and setters
+}
